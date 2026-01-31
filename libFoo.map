@@ -1,0 +1,6 @@
+LIBFOO_1.0 {
+    global:
+        rectangle_perimeter;
+    local:
+        *;
+};
