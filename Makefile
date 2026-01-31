@@ -2,6 +2,11 @@ CC = gcc
 CFLAGS = -Wall -fPIC
 LDFLAGS = -shared
 
+PREFIX ?= /usr/local
+LIBDIR = $(PREFIX)/lib
+INCLUDEDIR = $(PREFIX)/include
+BINDIR = $(PREFIX)/bin
+
 UNVERSIONED_DIR = lib-unversioned
 VERSIONED_DIR = lib-versioned
 
@@ -9,7 +14,7 @@ LIB_NAME = libFoo.so
 LIB_SONAME = libFoo.so.1
 LIB_REALNAME = libFoo.so.1.0.0
 
-.PHONY: all unversioned versioned bar bar-versioned clean
+.PHONY: all unversioned versioned bar bar-versioned clean install uninstall
 
 all: unversioned bar versioned bar-versioned
 
@@ -55,3 +60,20 @@ $(VERSIONED_DIR)/$(LIB_NAME): $(VERSIONED_DIR)/$(LIB_REALNAME)
 
 clean:
 	rm -rf $(UNVERSIONED_DIR) $(VERSIONED_DIR) Bar Bar-versioned
+
+install: versioned bar
+	install -d $(DESTDIR)$(LIBDIR)
+	install -d $(DESTDIR)$(INCLUDEDIR)
+	install -d $(DESTDIR)$(BINDIR)
+	install -m 755 $(VERSIONED_DIR)/$(LIB_REALNAME) $(DESTDIR)$(LIBDIR)/$(LIB_REALNAME)
+	ln -sf $(LIB_REALNAME) $(DESTDIR)$(LIBDIR)/$(LIB_SONAME)
+	ln -sf $(LIB_REALNAME) $(DESTDIR)$(LIBDIR)/$(LIB_NAME)
+	install -m 644 foo.h $(DESTDIR)$(INCLUDEDIR)/foo.h
+	install -m 755 Bar $(DESTDIR)$(BINDIR)/Bar
+
+uninstall:
+	rm -f $(DESTDIR)$(LIBDIR)/$(LIB_REALNAME)
+	rm -f $(DESTDIR)$(LIBDIR)/$(LIB_SONAME)
+	rm -f $(DESTDIR)$(LIBDIR)/$(LIB_NAME)
+	rm -f $(DESTDIR)$(INCLUDEDIR)/foo.h
+	rm -f $(DESTDIR)$(BINDIR)/Bar

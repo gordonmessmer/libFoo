@@ -1,0 +1,20 @@
+name: source-git build and test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: source-git build
+        uses: gordonmessmer/source-git-action@main
+        with:
+          mock-root: 'fedora-44-x86_64'
+

@@ -1,4 +1,4 @@
-Run `make` in both v1.0 and v1.1 to build four applications and shared libraries:
+Run `build.sh` in both v1.0 and v1.1 to build four applications and shared libraries:
 
  * v1.0/Bar: Bar linked to libFoo v1.0 without versioned symbols
  * v1.0/Bar-versioned: Bar linked to libFoo v1.0 with versioned symbols
@@ -9,7 +9,7 @@ This is intended to demonstrate three things:
 
 ## Adding versioned symbols to a library is a backward compatible change
 
-`./Bar` is linked to a library without versioned symbols, but can be
+Each `Bar` is linked to a library without versioned symbols, but can be
 run with the library after versioned symbols are added.
 
 ```
@@ -24,7 +24,7 @@ Usage: ./Bar <width> <height> <perimeter|area>
 
 ## Adding features to the library is a backward compatible change
 
-The version of `./Bar` in the v1.0 directory can be used with the libraries
+The version of `Bar` in the v1.0 directory can be used with the libraries
 in the v1.1 directory.
 
 ```
@@ -40,7 +40,7 @@ Usage: ./Bar <width> <height> <perimeter>
 ## Libraries are not forward compatible with new binaries
 
 The reverse of the previous arrangement does not work. The version of
-`./Bar` in the v1.1 directory cannot be used with the libraries in the
+`Bar` in the v1.1 directory cannot be used with the libraries in the
 v1.0 directory.
 
 ```
