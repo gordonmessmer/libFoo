@@ -10,7 +10,7 @@ License:        MIT
 Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires: gcc
-BuildRequires: make
+BuildRequires: cmake
 
 %description
 A simple example spec file for Fedora.
@@ -19,12 +19,14 @@ A simple example spec file for Fedora.
 %setup -q
 
 %build
-%make_build
+%cmake
+%cmake_build
 
 %install
-%make_install PREFIX=%{_prefix} LIBDIR=%{_libdir}
+%cmake_install
 
 %check
+%ctest
 
 %files
 %{_bindir}/Bar
