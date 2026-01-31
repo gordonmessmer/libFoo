@@ -1,11 +1,17 @@
 #!/bin/bash
-# Minimal build script
+# Minimal build script for autoconf/automake
 
 set -e
 
-# Build
+# Generate build system files
+autoreconf -fiv
+
+# Configure the build
+./configure
+
+# Build the library
 make
 
-branch=$(git branch --show-current)
-mkdir $branch
-cp -r Bar Bar-versioned lib-unversioned lib-versioned $branch
+echo ""
+echo "Build complete. Library built as:"
+find .libs -name "libFoo.so*" -type f -o -type l | head -1
