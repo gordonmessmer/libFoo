@@ -1,10 +1,17 @@
 LIBFOO_1.0 {
     global:
-        rectangle_perimeter;
+        extern "C++" {
+            "geometry::Rectangle::Rectangle(double, double)";
+            "geometry::Rectangle::perimeter() const";
+            "geometry::Rectangle::get_width() const";
+            "geometry::Rectangle::get_height() const";
+        };
     local:
         *;
 };
 LIBFOO_1.1 {
     global:
-        rectangle_area;
+        extern "C++" {
+            "geometry::Rectangle::area() const";
+        };
 } LIBFOO_1.0;

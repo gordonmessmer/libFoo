@@ -1,5 +1,5 @@
-CC = gcc
-CFLAGS = -Wall -fPIC
+CXX = g++
+CXXFLAGS = -Wall -fPIC -std=c++11
 LDFLAGS = -shared
 
 PREFIX ?= /usr/local
@@ -21,9 +21,9 @@ all: unversioned bar versioned bar-versioned
 # Build unversioned library
 unversioned: $(UNVERSIONED_DIR)/$(LIB_REALNAME) $(UNVERSIONED_DIR)/$(LIB_SONAME) $(UNVERSIONED_DIR)/$(LIB_NAME)
 
-$(UNVERSIONED_DIR)/$(LIB_REALNAME): foo.c foo.h
+$(UNVERSIONED_DIR)/$(LIB_REALNAME): foo.cpp foo.h
 	@mkdir -p $(UNVERSIONED_DIR)
-	$(CC) $(CFLAGS) $(LDFLAGS) -Wl,-soname,$(LIB_SONAME) -o $@ foo.c
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -Wl,-soname,$(LIB_SONAME) -o $@ foo.cpp
 
 $(UNVERSIONED_DIR)/$(LIB_SONAME): $(UNVERSIONED_DIR)/$(LIB_REALNAME)
 	ln -sf $(LIB_REALNAME) $@
@@ -35,22 +35,22 @@ $(UNVERSIONED_DIR)/$(LIB_NAME): $(UNVERSIONED_DIR)/$(LIB_REALNAME)
 bar: Bar
 	@echo "Bar program built successfully"
 
-Bar: bar.c unversioned
-	$(CC) $(CFLAGS) -o Bar bar.c -L$(UNVERSIONED_DIR) -lFoo -Wl,-rpath,$(UNVERSIONED_DIR)
+Bar: bar.cpp unversioned
+	$(CXX) $(CXXFLAGS) -o Bar bar.cpp -L$(UNVERSIONED_DIR) -lFoo -Wl,-rpath,$(UNVERSIONED_DIR)
 
 # Build Bar program with versioned library
 bar-versioned: Bar-versioned
 	@echo "Bar-versioned program built successfully"
 
-Bar-versioned: bar.c versioned
-	$(CC) $(CFLAGS) -o Bar-versioned bar.c -L$(VERSIONED_DIR) -lFoo -Wl,-rpath,$(VERSIONED_DIR)
+Bar-versioned: bar.cpp versioned
+	$(CXX) $(CXXFLAGS) -o Bar-versioned bar.cpp -L$(VERSIONED_DIR) -lFoo -Wl,-rpath,$(VERSIONED_DIR)
 
 # Build versioned library
 versioned: $(VERSIONED_DIR)/$(LIB_REALNAME) $(VERSIONED_DIR)/$(LIB_SONAME) $(VERSIONED_DIR)/$(LIB_NAME)
 
-$(VERSIONED_DIR)/$(LIB_REALNAME): foo.c foo.h libFoo.map
+$(VERSIONED_DIR)/$(LIB_REALNAME): foo.cpp foo.h libFoo.map
 	@mkdir -p $(VERSIONED_DIR)
-	$(CC) $(CFLAGS) $(LDFLAGS) -Wl,-soname,$(LIB_SONAME) -Wl,--version-script=libFoo.map -o $@ foo.c
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -Wl,-soname,$(LIB_SONAME) -Wl,--version-script=libFoo.map -o $@ foo.cpp
 
 $(VERSIONED_DIR)/$(LIB_SONAME): $(VERSIONED_DIR)/$(LIB_REALNAME)
 	ln -sf $(LIB_REALNAME) $@
