@@ -1,11 +1,14 @@
 #!/bin/bash
-# Minimal build script
+# Minimal build script for Meson
 
 set -e
 
-# Build
-make
+# Setup build directory
+meson setup builddir
 
-branch=$(git branch --show-current)
-mkdir $branch
-cp -r Bar Bar-versioned lib-unversioned lib-versioned $branch
+# Build
+meson compile -C builddir
+
+echo ""
+echo "Build complete. Library built as:"
+find builddir -name "libFoo.so*" -type f | head -1
