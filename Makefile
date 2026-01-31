@@ -12,7 +12,7 @@ VERSIONED_DIR = lib-versioned
 
 LIB_NAME = libFoo.so
 LIB_SONAME = libFoo.so.1
-LIB_REALNAME = libFoo.so.1.0.0
+LIB_REALNAME = libFoo.so.1.1.0
 
 .PHONY: all unversioned versioned bar bar-versioned clean install uninstall
 

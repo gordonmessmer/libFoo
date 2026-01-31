@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[]) {
     if (argc != 4) {
-        fprintf(stderr, "Usage: %s <width> <height> <perimeter>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <width> <height> <perimeter|area>\n", argv[0]);
         return 1;
     }
 
@@ -16,8 +16,11 @@ int main(int argc, char *argv[]) {
     if (strcmp(operation, "perimeter") == 0) {
         double result = rectangle_perimeter(width, height);
         printf("Perimeter: %.2f\n", result);
+    } else if (strcmp(operation, "area") == 0) {
+        double result = rectangle_area(width, height);
+        printf("Area: %.2f\n", result);
     } else {
-        fprintf(stderr, "Invalid operation: %s (use 'perimeter')\n", operation);
+        fprintf(stderr, "Invalid operation: %s (use 'perimeter' or 'area')\n", operation);
         return 1;
     }
 

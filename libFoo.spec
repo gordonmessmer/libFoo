@@ -3,7 +3,7 @@
 %global debug_package %{nil}
 
 Name:           libFoo
-Version:        1.0
+Version:        1.1
 Release:        %autorelease
 Summary:        A simple library
 License:        MIT
@@ -31,7 +31,7 @@ A simple example spec file for Fedora.
 %{_includedir}/foo.h
 %{_libdir}/libFoo.so
 %{_libdir}/libFoo.so.1
-%{_libdir}/libFoo.so.1.0.0
+%{_libdir}/libFoo.so.1.1.0
 
 %changelog
 %autochangelog

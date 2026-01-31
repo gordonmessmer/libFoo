@@ -4,3 +4,7 @@ LIBFOO_1.0 {
     local:
         *;
 };
+LIBFOO_1.1 {
+    global:
+        rectangle_area;
+} LIBFOO_1.0;
